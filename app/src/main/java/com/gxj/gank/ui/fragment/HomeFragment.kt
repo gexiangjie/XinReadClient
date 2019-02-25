@@ -1,40 +1,35 @@
 package com.gxj.gank.ui.fragment
 
-import android.util.Log
+import android.arch.lifecycle.Observer
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
+import com.gxj.base.base.BaseFragment
 import com.gxj.gank.R
-import com.gxj.gank.bean.TodayBean
-import com.gxj.gank.http.RetrofitHelp
-import com.gxj.module_base.base.BaseFragment
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import org.reactivestreams.Subscriber
-import org.reactivestreams.Subscription
+import com.gxj.gank.bean.DailyData
+import com.gxj.gank.ui.adapter.HomeAdapter
+import com.gxj.gank.viewmodel.HomeViewModel
+import kotlinx.android.synthetic.main.fragment_home.recycler_view
 
-class HomeFragment : BaseFragment() {
+class HomeFragment : BaseFragment<HomeViewModel>() {
+
+    private val mAdapter by lazy { HomeAdapter(arrayListOf()) }
+
+    override fun getViewModel() = HomeViewModel()
 
     override fun getLayoutId() = R.layout.fragment_home
 
     override fun initView() {
-        RetrofitHelp.getGankApi().getToday().subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Subscriber<TodayBean> {
-                override fun onComplete() {
-                    Log.e("gxj : ", "onComplete")
-                }
-
-                override fun onSubscribe(s: Subscription?) {
-                    Log.e("gxj : ", "onSubscribe")
-                }
-
-                override fun onNext(t: TodayBean?) {
-                    Log.e("gxj : ", "onNext")
-                    Log.e("gxj : ", "${t!!.results!!.android!!.forEach { it.desc }}}")
-                }
-
-                override fun onError(t: Throwable?) {
-                    Log.e("gxj : ", "${t!!.message}")
-                }
-
-            })
+        recycler_view.layoutManager = LinearLayoutManager(context)
+        recycler_view.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                LinearLayoutManager.VERTICAL
+            )
+        )
+        recycler_view.adapter = mAdapter
+        mViewModel.getTodayData()
+        mViewModel.mDailyData.observe(this, Observer { list ->
+            mAdapter.setNewData(list as MutableList<DailyData>)
+        })
     }
 }

@@ -2,6 +2,7 @@ package com.gxj.gank.bean
 
 import com.google.gson.JsonArray
 import com.google.gson.annotations.SerializedName
+import com.gxj.base.utils.DateUtil
 
 /**
  * 最新数据
@@ -14,21 +15,21 @@ class TodayBean {
 
 class DailyResults {
     @SerializedName("Android")
-    var android: List<DailyData>? = null
+    var android: MutableList<DailyData>? = null
     @SerializedName("App")
-    var app: List<DailyData>? = null
+    var app: MutableList<DailyData>? = null
     @SerializedName("iOS")
-    var ios: List<DailyData>? = null
+    var ios: MutableList<DailyData>? = null
     @SerializedName("休息视频")
-    var video: List<DailyData>? = null
+    var video: MutableList<DailyData>? = null
     @SerializedName("前端")
-    var 前端: List<DailyData>? = null
+    var 前端: MutableList<DailyData>? = null
     @SerializedName("拓展资源")
-    var 拓展资源: List<DailyData>? = null
+    var 拓展资源: MutableList<DailyData>? = null
     @SerializedName("瞎推荐")
-    var recommend: List<DailyData>? = null
+    var recommend: MutableList<DailyData>? = null
     @SerializedName("福利")
-    var welfare: List<DailyData>? = null
+    var welfare: MutableList<DailyData>? = null
 }
 
 data class DailyData(
@@ -42,7 +43,12 @@ data class DailyData(
     val url: String?,
     val used: Boolean?,
     val who: String?
-)
+) {
+    val createdTime: String
+        get() {
+            return DateUtil.utcToStr(createdAt!!)
+        }
+}
 
 /*
 {
