@@ -43,13 +43,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_sort" />
 
-        <ImageView
+        <com.gxj.base.component.viewgroup.NineGridImageView
             android:id="@+id/img_content"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            app:imageUrl='@{daily.images.size() > 0 ? daily.images.get(0) : ""}'
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_des" />
 

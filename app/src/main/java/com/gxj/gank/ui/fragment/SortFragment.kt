@@ -13,6 +13,14 @@ class SortFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_sort, null)
+        val view = inflater.inflate(R.layout.fragment_sort, container, false)
+//        val nineGridImageView = NineGridImageView(context!!)
+//        nineGridImageView.addNewView()
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
     }
 }

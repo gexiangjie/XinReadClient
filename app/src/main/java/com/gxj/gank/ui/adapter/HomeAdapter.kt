@@ -3,6 +3,7 @@ package com.gxj.gank.ui.adapter
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import com.gxj.gank.R
 import com.gxj.gank.bean.DailyData
@@ -31,6 +32,11 @@ class HomeAdapter(private var data: MutableList<DailyData>) :
         val binding: ItemHomeBinding = holder.binding
         binding.daily = dailyData
         binding.type = mType
+        if (dailyData.images != null && dailyData.images.isNotEmpty()) {
+            binding.imgContent.addNewView(dailyData.images)
+        } else {
+            binding.imgContent.visibility = View.GONE
+        }
         binding.executePendingBindings()
 
         mType = dailyData.type!!

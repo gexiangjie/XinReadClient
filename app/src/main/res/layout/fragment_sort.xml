@@ -3,8 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <com.gxj.base.component.viewgroup.NineGridImageView
+        android:id="@+id/nine_img"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/sort"/>
+        android:layout_height="match_parent">
+
+    </com.gxj.base.component.viewgroup.NineGridImageView>
 </android.support.constraint.ConstraintLayout>
