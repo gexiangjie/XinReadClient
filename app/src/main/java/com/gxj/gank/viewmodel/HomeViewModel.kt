@@ -2,11 +2,12 @@ package com.gxj.gank.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
+import com.gxj.base.base.BaseViewModel
 import com.gxj.gank.bean.DailyData
 import com.gxj.gank.http.RetrofitHelp
-import com.gxj.base.base.BaseViewModel
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 
 class HomeViewModel : BaseViewModel() {
@@ -47,9 +48,14 @@ class HomeViewModel : BaseViewModel() {
                     }
                 }
                 Flowable.just(list)
-            }.subscribe {
+            }.subscribeBy(onNext = {
+
                 Log.e("gxj : ", "${it[0].desc}")
                 mDailyData.value = it!!
-            }.addDisposable()
+            },
+                onError = {
+                    it.printStackTrace()
+                }
+            ).addDisposable()
     }
 }
